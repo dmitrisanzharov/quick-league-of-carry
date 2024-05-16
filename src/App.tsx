@@ -84,6 +84,13 @@ function App() {
 		return whichTeamIsStronger <= 0 ? "LOSS" : "WIN";
 	}
 
+	function handleReRollSinglePlayer(idx: number){
+		let newPlayer = randomInteger(0, 4);
+		let newArr = [...playerArr];
+		newArr[idx] = newPlayer;
+		setPlayerArr(newArr)
+	}
+
 	React.useEffect(() => {
 		setPlayerArr(generatePlayers());
 	}, [reRoll]);
@@ -94,9 +101,10 @@ function App() {
 				{reRoll === 0 ? "QUE UP" : "NEW LOBBY"}
 			</Button>
 			{/* Outcome prediction */}
-			<Typography variant="body1" sx={{ marginTop: 3 }}>
-				Outcome prediction: {reRoll === 0 ? 'please que up' : calcOutcome()}
-			</Typography>
+			{/* <Typography variant="body1" sx={{ marginTop: 3 }}>
+				Outcome prediction:{" "}
+				{reRoll === 0 ? "please que up" : calcOutcome()}
+			</Typography> */}
 			<hr />
 			{Boolean(reRoll) && (
 				<Box>
@@ -114,7 +122,7 @@ function App() {
 												backgroundColor: "lightgray",
 												...playerBoxesStyle,
 											}}
-                      key={'you_key'}
+											key={"you_key"}
 										>
 											You
 										</Paper>
@@ -123,12 +131,13 @@ function App() {
 								return (
 									<Box key={idx}>
 										{playerDivBasedOnScore(item)}
+										<Button onClick={()=> handleReRollSinglePlayer(idx)}>new player</Button>
 									</Box>
 								);
 							})}
 					</Box>
 					{/* ENEMY TEAM */}
-					<Typography variant="h5" sx={{ marginTop: 3 }}>
+					{/* <Typography variant="h5" sx={{ marginTop: 3 }}>
 						Enemy team
 					</Typography>
 					<Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
@@ -139,7 +148,7 @@ function App() {
 								</Box>
 							);
 						})}
-					</Box>
+					</Box> */}
 					{/* end of players box */}
 				</Box>
 			)}
